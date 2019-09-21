@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <section>
+        <!-- https://github.com/gautamkrishnar/Be-Like-Bill -->
+        <img src="https://belikebill.ga/billgen-API.php?default=1&name={{ username }}&sex={{ sex }}" />
+    </section>
+
+    <br><br><br>
+
+    <section>
+        <h2>My Feedback</h2>
+
+
+        {% for row in rows %}
+        <div class="card text-white bg-info mb-3">
+              <div class="card-header">From: {{ row["user_from"] }} At: {{ row["datetime"] }}</div>
+              <div class="card-body">
+                <h4 class="card-title">{{ row["title"] }}</h4>
+                <p class="card-text">{{ row["feedback"] }}</p>
+              </div>
+            </div>
+        {% endfor %}
+
+{% endblock %}
+
+

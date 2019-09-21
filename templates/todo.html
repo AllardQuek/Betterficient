@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    To-Do
+{% endblock %}
+
+{% block main %}
+
+
+    <table id="todo" class="table table-bordered table-hover text-primary">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>&#10004;</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <div id="rows">
+            {% for row in rows %}
+
+            <tr id="checkrow">
+                <td>{{ row["task"] }}</td>
+                <td>{{ row["deadline"] }}</td>
+
+                <!-- change input checkbox; update innerhtml to be a tick when button is clicked -->
+                <td><input id="{{ row["task"] }}" type="checkbox" class="save-cb-state" name="checkbox1" onchange="checkNow(this)"></td>
+
+            </tr>
+            {% endfor %}
+            </div>
+
+
+        </tbody>
+    </table>
+
+    <form action="/todo", method="post">
+        <div class="form-group">
+            <input type="text" name="task" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="date" name="deadline" class="form-control">
+        </div>
+        <button class="btn btn-info" type="submit">Add task</button>
+    </form>
+
+
+
+    <!-- https://www.quora.com/How-do-I-keep-checkbox-checked-after-refresh-in-HTML-JS -->
+    <!-- http://www.marcorpsa.com/ee/t2641.html -->
+
+    <!-- https://stackoverflow.com/questions/12485759/onclick-function-this-returns-window-object -->
+    <!-- https://blog.teamtreehouse.com/storing-data-on-the-client-with-localstorage -->
+    <script>
+    function checkNow(e) {
+
+        //e.parentElement.innerHTML = "&#10004;";
+        localStorage.removeItem(e.id);  // doesn't work, why??
+        if (e.checked) {
+            localStorage.setItem(e.id, true);
+        }
+        else {
+            localStorage.setItem(e.id, false);
+        }
+    }
+
+
+    $(document).ready(function() {
+        var i;
+        var items = document.getElementsByClassName("save-cb-state");
+        for (i=0; i<items.length; i++)
+        {
+            if (localStorage.getItem(items[i].id) == "true") {
+                items[i].checked = true;
+            }
+            else {
+                items[i].checked = false;
+            }
+            //console.log(localStorage.getItem(items[i].id));
+            // items[i].checked = localStorage.getItem(items[i].id);
+            // *** TAKE NOTE: difference between true the string and true the boolean, hence above line of code does NOT work ***
+        }
+     });
+    </script>
+
+
+
+
+
+
+
+{% endblock %}
+

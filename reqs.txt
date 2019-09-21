@@ -1,0 +1,89 @@
+Create a web application to simplify daily tasks so that people can be more efficient and spend more time on things they love, and also allow them to constantly self-improve
+
+- validation: bootstrap, finance check
+
+1) To-Do list
+- table of task/deadline/checkbox ++Google Calendar API **
+2) Feedback #
+++AJAX to display profile but only feasible if I know who all the users are else complicated
+3) User profile #
+- display funnyinspirationalmeme + feedback in article format
+4) Motivation
+- qotd api, based on mood? choose category?? **
+5) Finance (Excel sheet??)
+- table: category/qty/price/total/date
+- display amt spent by cat/date/week/month
+- reset button, manual?
+
+$(document).ready(function() {
+            $('#todo').DataTable();
+        } );
+
+
+
+            $('#checkBox').click(function(e){
+            	if (e.target.checked) {
+              	localStorage.checked = true;
+              } else {
+              	localStorage.checked = false;
+              }
+            })
+
+            $( document ).ready(function() {
+
+            	document.querySelector('#checkBox').checked = localStorage.checked
+
+            });
+
+        // Avoid scoping issues by encapsulating code inside anonymous function
+        (function() {
+          // variable to store our current state
+          var cbstate;
+
+          // bind to the onload event
+          window.addEventListener('load', function() {
+            // Get the current state from localstorage
+            // State is stored as a JSON string
+            cbstate = JSON.parse(localStorage['CBState'] || '{}');
+
+            // Loop through state array and restore checked
+            // state for matching elements
+            for(var i in cbstate) {
+              var el = document.querySelector('input[name="' + i + '"]');
+              if (el) el.checked = true;
+            }
+
+            // Get all checkboxes that you want to monitor state for
+            var cb = document.getElementsByClassName('save-cb-state');
+
+            // Loop through results and ...
+            for(var i = 0; i < cb.length; i++) {
+
+              //bind click event handler
+              cb[i].addEventListener('click', function(evt) {
+                // If checkboxe is checked then save to state
+                if (this.checked) {
+                  cbstate[this.name] = true;
+                }
+
+            // Else remove from state
+                else if (cbstate[this.name]) {
+                  delete cbstate[this.name];
+                }
+
+            // Persist state
+                localStorage.CBState = JSON.stringify(cbstate);
+              });
+            }
+          });
+        })();
+
+
+
+
+        function checkFunction() {
+              document.getElementsByClassName("save-cb-state").innerHTML = "&#10004;";
+        }
+
+
+

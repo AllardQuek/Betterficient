@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Feedback
+{% endblock %}
+
+{% block main %}
+    <form action="/feedback" method="post">
+
+        <div class="form-group text-primary">
+            <label for="select">Please select a user:</label>
+            <select name="user_to" required>
+                {% for user in users %}
+                <option value="{{ user["username"] }}">{{ user["username"] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" type="text" name="title" placeholder="Title" autofocus required>
+        </div>
+
+
+        <div class="form-group">
+            <textarea id="textarea" name="feedback" class="form-control" rows="8" placeholder="Feedback" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-info">Send</button>
+    </form>
+{% endblock %}
+
+
+
+
