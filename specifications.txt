@@ -80,7 +80,6 @@ $(document).ready(function() {
 
 
 
-
         function checkFunction() {
               document.getElementsByClassName("save-cb-state").innerHTML = "&#10004;";
         }
